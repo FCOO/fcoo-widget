@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="da" style="font-size: 100%">
+<head>
+	<title>fcoo.dk - fcoo-widget - Demo</title>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv='x-dns-prefetch-control' content='on'>
+
+	<meta name='copyright' content='FCOO'>
+	<meta name='owner' content='FCOO'>
+
+  <link  href="bower_components.css" rel="stylesheet">	
+  <link  href="../src/fcoo-widget.css" rel="stylesheet">	
+  <style>
+    html, body { width:100%; height:100%}
+    body {
+        padding: 30px;
+        text-align: center;
+        display: flex;
+        //justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;    
+    }        
+    div.test {
+        border: 1px solid black;
+        margin: 10px;
+    }    
+    </style>    
+</head>
+
+<body>
+	<script src="bower_components.js"></script>
+	<script src="../src/environmental-background.js"></script>
+	<script src="../src/fcoo-widget.js"></script>
+	<script>
+        const body = $('body');
+              
+        const optionsList = [{    
+            space: 15,
+            cloud: 15,
+            sky: 15,
+            ice: 5,
+            snow: 5,
+            sea: 15,
+            land: {height:15, bottom: false}, 
+            seabed: 15            
+        }, '', 'space<br>cloud<br>sky<br>ice<br>snow<br>sea<br>land<br>seabed',
+        
+        ];
+        
+
+        let firstWidget;
+        let widgetList = [];
+
+        $.each( window.fcoo.widget.envBackgroundOptions, (id, opt) => {
+            var inclDir = id == 'sea' || id == 'sky' || id.includes('sky_') || id.includes('sea_'),
+                cont = [{text:'Demo', textClass:'fw-bold'},id];
+            if (inclDir)
+                cont.push({content: '_DIRECTION_', size:'sm'});    
+            var widget = new window.fcoo.widget.Widget({
+                    content: cont, 
+                    envBackground: opt, 
+                    direction: inclDir ? (id.includes('sky') ? 'from' : true) : false,
+                    noAnimation: true,
+                    noData     : true,
+                    edge: { 
+                        topcenter: {icon:'fat fa-home', size: 'lg'}, 
+                        middleleft: {icon:'fat fa-ruler-vertical', size:'xl'}, 
+                        middleright: {icon: 'fal fa-temperature-full', size:'xl'},
+                        bottomright: {text: '12:30', onClick: function(){ alert(12.30);}} 
+                    }                        
+                    
+                 });
+            let $div = $('<div/>').addClass('test').appendTo(body);
+            widget.createContent($div);
+            widget.setDirection( 0 );
+            widgetList.push(widget);
+            firstWidget = firstWidget || widget;
+        });
+
+//*        
+        for (var i=0; i<optionsList.length; i=i+3){
+            
+            var envOptions = $.extend({}, optionsList[i+1], optionsList[i] );
+            
+            var widget = new window.fcoo.widget.Widget({
+                    content: optionsList[i+2],
+                    envBackground: envOptions,
+                });                            
+            let $div = $('<div/>').addClass('test').appendTo(body);
+
+            widget.createContent($div);
+            widgetList.push(widget);
+                             
+        }                
+//*/
+        var $size = $('<div/><label for="widgetSize">Size:</label><input type="range" min="100" max="1000" value="200" id="widgetSize"/></div>').prependTo(body),
+            $dir = $('<div/><label for="widgetDir">Dir:</label><input type="range" min="0" max="359" value="0" id="widgetDir"/></div>').prependTo(body),
+            $hide = $('<button style="height: 40px">Hide first widget</button>').prependTo(body),
+            $show = $('<button style="height: 40px">Show first widget</button>').prependTo(body);            
+
+        $size.on('input', function(e){ 
+            $('.test').setVar('--size', e.target.value+'px'); 
+        });
+        $dir.on('input', function(e){ 
+            widgetList.forEach(widget => { widget.setDirection(e.target.value); } );
+        });
+        $hide.on('click', function(){ firstWidget.setDataAvailableOff(); });
+        $show.on('click', function(){ firstWidget.setDataAvailableOn();  });
+
+	</script>
+</body>
+</html>
