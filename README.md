@@ -3,7 +3,8 @@
 
 
 ## Description
-This package is used for...
+This package is used for creating modal-windows as widgets.
+It is a extension of `$.bsModal` in [fcoo/jquery-bootstrap](https://github.com/FCOO/jquery-bootstrap)
 
 ## Installation
 ### bower
@@ -13,20 +14,20 @@ This package is used for...
 http://FCOO.github.io/fcoo-widget/demo/ 
 
 ## Usage
-```var myFcooWidget = new FcooWidget( options );```
+
+```let myWidget = new window.fcoo.widget.Widget({...});```
 
 
 ### options
-| Id | Type | Default | Description |
-| :--: | :--: | :-----: | --- |
-| options1 | boolean | true | If <code>true</code> the ... |
-| options2 | string | null | Contain the ... |
 
+The options and use are descriped in `src/fcoo-widget.js`
+
+<!--
 ### Methods
 
     .methods1( arg1, arg2,...): Do something
     .methods2( arg1, arg2,...): Do something else
-
+-->
 
 
 ## Copyright and License
@@ -38,5 +39,3 @@ Copyright (c) 2024 [FCOO](https://github.com/FCOO)
 
 Niels Holt nho@fcoo.dk
 
-
-## Credits and acknowledgements

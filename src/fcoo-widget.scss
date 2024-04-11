@@ -21,6 +21,20 @@
 @import "../bower_components/modernizr-scss/dist/modernizr-scss";
 
 
+/**********************************************
+widget-container
+The outer div holding the modal-content
+************************************************/
+$padding: 2px;
+:root {
+    --widget-padding: #{$padding};
+}
+
+.widget-container {
+    width  : fit-content;
+    padding: var(--widget-padding);
+}
+
 /***********************************************
 Environmental Background, surface and direction-circle
 ************************************************/
@@ -30,19 +44,63 @@ $wave-z-index       : 3;
 $svg-z-index        : 4;
 $svg-rotate-z-index : 5;
 
-.widget-container {
-    --default-size: 200px;
-    --_size: var(--size, var(--default-size));
-    width  : var(--_size);
-    height : var(--_size);
+.widget-content {
+    width  : 100%;
 
-    //Font-size
-    --font-size-ratio: 16/200; //or 16/150
-    font-size: calc(var(--_size) * var(--font-size-ratio) );
+    //Font-size relative to height
+    &.relative-font-size {
+        --font-size-ratio: 16/200; //or 16/150
+        font-size: calc(var(--inner-height) * var(--font-size-ratio) );
+    }
 
     position: relative;
 
-    //Font-szie correspond with $jb-font-size-SIZE in jquery-bootstrap
+
+    //Text- and svg-color
+    --default-color: 0, 0, 0;
+
+    --color-text: var(--default-color);
+    --alpha-text : 1.0;
+
+    --color-stroke: var(--default-color);
+    --alpha-stroke: 1.0;
+
+    --color-fill  : var(--default-color);
+    --alpha-fill  : 1.0;
+
+
+    .content {
+        color : rgba(var(--color-text), var(--alpha-text));
+    }
+    .svg, .svg * {
+        stroke: rgba(var(--color-stroke), var(--alpha-stroke));
+        fill  : rgba(var(--color-fill),   var(--alpha-fill)  );
+    }
+
+    &.with-background {
+        --default-color: 255, 255, 255;
+
+        //.content is always semi-transparent with text-shadow
+        .content {
+            --alpha-text: 0.9;
+            text-shadow: 0px 0px 2px black;
+        }
+
+        //svg-elmentes need class semi-transparent-stroke and/or semi-transparent-fill to become semi-transparent
+        .svg, .svg * {
+            &.semi-transparent-stroke {
+                --alpha-stroke-semi-transparent: .9;
+                --alpha-stroke: var(--alpha-stroke-semi-transparent);
+            }
+
+            &.semi-transparent-fill {
+                --alpha-fill-semi-transparent: .75;
+                --alpha-fill: var(--alpha-fill-semi-transparent);
+            }
+        }
+    }
+
+    //Font-size correspond with $jb-font-size-SIZE in jquery-bootstrap
     & .size-xxs { font-size: .6875em }
     & .size-xs  { font-size: .75em   }
     & .size-sm  { font-size: .875em }
@@ -63,15 +121,13 @@ $svg-rotate-z-index : 5;
         justify-content : center;
         align-items     : center;
 
-        color      : rgba(255, 255, 255, 0.9);
-        text-shadow: 0px 0px 2px black;
-
         font-size  : 1em;
 
         &.edge-content {
-            left  :  3%;
-            width : 94%;
-            height: 88%;
+            top   :  1%;
+            left  :  2%;
+            width : 96%;
+            height: 98%;
 
             .edge-part {
                 &[class*="top"]     { position: absolute; top   : 0%; }
@@ -102,6 +158,8 @@ $svg-rotate-z-index : 5;
         width   : 100%;
         height  : 100%;
         z-index : $svg-z-index;
+        stroke  : black;
+
         &.rotatable {
             transform          : rotate(var(--direction, 0deg));
             transition-duration: 2s;
@@ -111,29 +169,33 @@ $svg-rotate-z-index : 5;
             z-index: $svg-rotate-z-index;
         }
 
-        .direction-circle {
-            fill        : none;
-            stroke      : #FFFFFFBB;
+        .no-fill { fill: none; }
+
+        &.svg-arrow {
+            width : 12%;
+            height: 98%;
+            top   :  1%;
+            left  : 44%;
         }
 
         .direction-arrow {
-            fill  : rgba(255,255,0, .75);
-            stroke: black;
+            stroke      : black;
+            --color-fill: 255, 255, 0;
+
             .hide-direction-arrow & {
                 display: none;
             }
         }
     }
 
-}   //.widget-container {
+}   //.widget-content {...}
 
 //Create Modernizr-classes for .widget-container.data-available / .widget-container.no-data-available
 @include show-and-hide-for-modernizr-test( data-available, ".widget-container", true, '', false );
 
-
 //Wave: Adjusted from https://codepen.io/shubham715/pen/oqbPGq
 .wave{
-    --wave-radius: calc(var(--_size, 400) * 10 / 400); //=> radius = 10px when sizer = 400px
+    --wave-radius: calc(var(--_height, 400) * 10 / 400); //=> radius = 10px when height = 400px
     --radius  : calc( var(--wave-radius, 10px) * var(--wave-radius-factor, 1) );
     --height  : calc(1.5 * var(--radius));
     --diameter: calc(2 * var(--radius));

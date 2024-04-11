@@ -22,16 +22,10 @@ Create background in element with
     ID = 'space', 'sky', 'cloud', 'wave', 'ice', 'snow', 'sea', 'land', or 'seabed'
 
     ************************************************************/
-    const getEnvPartName = (env) => 'fcoo-env-' + env  + '-color';
-    const getEnvPartVar  = (env) => 'var(--' + getEnvPartName(env)  + ')';
-    /*
-    const setEnvBG = ($elem, env) => {
-        $elem.addClass( getEnvPartName(env) );
-        return $elem;
-    }
-    */
-
-    const   defaultPartsOptions = {
+    const   defaultPartHeight = 5,
+            getEnvPartName = (env) => 'fcoo-env-' + env  + '-color',
+            getEnvPartVar  = (env) => 'var(--' + getEnvPartName(env)  + ')',
+            defaultPartsOptions = {
                 ice     : {height: 2},
                 snow    : {height: 3},
 
@@ -41,7 +35,7 @@ Create background in element with
 
             },
             defaultPartOptions = {
-                height: 5,
+                height: defaultPartHeight,
                 bottom: false
             };
 
@@ -63,8 +57,6 @@ Create background in element with
 
 
         ['space', 'cloud', 'sky', 'wave', 'ice', 'snow', 'sea', 'land', 'seabed'].forEach( partId => {
-// HER>             if (options.surface == partId)
-// HER>                 options[partId] = options[partId] || true;
             partOptionsList = [{}];
 
             if (options[partId] || (options.surface == partId)){
@@ -98,8 +90,8 @@ Create background in element with
                     if (options.surface == partId){
                         let surfacePos = 50;
                         switch (options.surfacePos || 'middle'){
-                            case 'top'   : surfacePos =  5; break;
-                            case 'bottom': surfacePos = 95; break;
+                            case 'top'   : surfacePos = defaultPartHeight; break;
+                            case 'bottom': surfacePos = 100 - defaultPartHeight; break;
                             case 'middle': surfacePos = 50; break;
                         }
                         $elem.setVar('--surface-position', surfacePos+'%');
@@ -157,18 +149,19 @@ Create background in element with
     addDirectionCircle
     ************************************************************/
     nsWidget.addDirectionCircle = ($elem, directionFrom, noAnimation) => {
-        const   radius  = 40,
+        const   radius  = 38,//40,
                 majorTickLgd = 3,
                 majorTicks   = 4,
 
                 minorTickLgd = 1.25,
                 minorTicks   = 16,
 
-                arrow_width      = 10,
+                arrow_width      = 11,
                 arrow_half_width = arrow_width/2,
                 arrow_height     = 1.25*arrow_width,
-                c_cross = 2 / 3 * arrow_height, //The point where the circle cross the arrow
-                arrow_points = [50,50, 50+arrow_half_width, 50+arrow_height,   50-arrow_half_width, 50+arrow_height];//, 50, 50,  50, 50+arrow_height];
+                c_cross = 0.4 * arrow_height, //The point where the circle cross the arrow
+                transformY = -4/100*radius + (directionFrom ? 2*radius : 0) + c_cross, //-4/100*radius = move arrow to circle
+                arrow_points = [arrow_half_width,0, arrow_width,arrow_height, 0,arrow_height];
 
         //Create svg-path with ticks on the circle
         let dirPath = '';
@@ -186,18 +179,18 @@ Create background in element with
 
         let $result = $(
                 //Circle with 'compas'-dots
-                '<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" class="svg">' +
-                    '<circle cx="50" cy="50" r="'+radius+'" class="direction-circle"/></circle>' +
-                    '<path xmlns="http://www.w3.org/2000/svg" class="direction-circle" d="'+dirPath+'"/>' +
-                '</svg>' +
-                //Arrow
-                '<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" class="svg hide-for-no-data-available rotatable'+(noAnimation ? ' no-transition-duration' : '')+'">' +
-                    '<polygon class="direction-arrow" '+
-                        'points="' + arrow_points.join(' ') + '" '+
-                        'transform="scale(1) translate(0, ' + (directionFrom ? radius - c_cross : -radius - c_cross) + ')">'+
-                    '</polygon>' +
+                '<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" class="svg">' +
+                    '<circle cx="50" cy="50" r="'+radius+'" class="no-fill"/></circle>' +
+                    '<path xmlns="http://www.w3.org/2000/svg" class="_no-fill" d="'+dirPath+'"/>' +
                 '</svg>' +
 
+                //Arrow
+                '<svg viewBox="0 0 '+arrow_width+' 100" preserveAspectRatio="xMidYMid meet" class="svg svg-arrow hide-for-no-data-available rotatable'+(noAnimation ? ' no-transition-duration' : '')+'">' +
+                    '<polygon class="direction-arrow semi-transparent-fill" '+
+                        'points="' + arrow_points.join(' ') + '" '+
+                        'transform="scale(1) translate(0,'+transformY+')">'+
+                    '</polygon>' +
+                '</svg>' +
                 ''
             ).appendTo($elem);
 

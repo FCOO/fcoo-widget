@@ -14,17 +14,22 @@
   <style>
     html, body { width:100%; height:100%}
     body {
-        padding: 30px;
-        text-align: center;
         display: flex;
-        //justify-content: space-between;
-        flex-direction: row;
-        flex-wrap: wrap;    
-    }        
+        flex-direction: column;
+        align-items: center;    
+    }   
+    
     div.test {
+        display: none;    
         border: 1px solid black;
         margin: 10px;
     }    
+
+    #theList {
+        display: flex;
+        flex-direction: column;
+    }        
+
     </style>    
 </head>
 
@@ -33,8 +38,13 @@
 	<script src="../src/environmental-background.js"></script>
 	<script src="../src/fcoo-widget.js"></script>
 	<script>
+        $.BSMODAL_USE_SQUARE_ICONS = true;
+        
+        window.bsIsTouch = false;
+        window.bsIsTouch = (window.location.search =='?touch');        
+    
         const body = $('body');
-              
+
         const optionsList = [{    
             space: 15,
             cloud: 15,
@@ -49,36 +59,83 @@
         ];
         
 
+        let $list = $('<div id="theList"></div>').appendTo(body);
         let firstWidget;
         let widgetList = [];
+        let widget = null;
 
+        widget = new window.fcoo.widget.Widget({
+            innerWidth : 200,
+            innerHeight: 200,
+            scroll: true,
+//noVerticalPadding: true,
+            header       : {text: 'Test with normal text'},
+            minimized: {
+                content: 'Dette er en test', 
+                height: '50px',
+                _innerHeight: '50px',
+                hideFixed: true,
+                hideFooter: true,
+                width: '100px'
+            },                        
+            content: 'Line 1<br>Line 2<br>Line 3<br>Line 4<br>Line 5<br>Line 6<br>Line 7<br>Line 8<br>Line 9<br>Line 10<br>Line 11<br>Line 12', 
+            
+            _fixedContent: 'Fixed',
+            //envBackground: window.fcoo.widget.environmentalBackgroundOptions.sky_over_sea,
+
+            footer: 'Footer'
+        });
+        widget.create().appendTo($list);
+
+        
         $.each( window.fcoo.widget.envBackgroundOptions, (id, opt) => {
+/*
+if (id != 'sky_over_sea')
+return;            
+//*/
             var inclDir = id == 'sea' || id == 'sky' || id.includes('sky_') || id.includes('sea_'),
                 cont = [{text:'Demo', textClass:'fw-bold'},id];
             if (inclDir)
-                cont.push({content: '_DIRECTION_', size:'sm'});    
-            var widget = new window.fcoo.widget.Widget({
-                    content: cont, 
-                    envBackground: opt, 
-                    direction: inclDir ? (id.includes('sky') ? 'from' : true) : false,
-                    noAnimation: true,
-                    noData     : true,
-                    edge: { 
-                        topcenter: {icon:'fat fa-home', size: 'lg'}, 
-                        middleleft: {icon:'fat fa-ruler-vertical', size:'xl'}, 
-                        middleright: {icon: 'fal fa-temperature-full', size:'xl'},
-                        bottomright: {text: '12:30', onClick: function(){ alert(12.30);}} 
-                    }                        
+                cont.push({content: '_DIRECTION_', _size:'sm'});        
+            widget = new window.fcoo.widget.Widget({
+                innerWidth: 432,
+                innerHeight: 432,
+                //noPadding: true,
+                header       : {text: id},
+                minimized: {
+                    content: inclDir ? [{content: '_DIRECTION_', size:'lg'}] : id, 
+                    widgetContent: true,
+                    envBackground: true,
+relativeFontSize: true,
                     
-                 });
-            let $div = $('<div/>').addClass('test').appendTo(body);
-            widget.createContent($div);
-            widget.setDirection( 0 );
+                    noData: true,
+                    noDataFontSize  : 'nl',                        
+                    //innerHeight: '2em'
+                },                        
+                content      : cont, 
+                widgetContent: true,
+                relativeFontSize: true,
+                envBackground  : opt, 
+                direction      : inclDir ? (id.includes('sky') ? 'from' : true) : false,
+                directionCircle: inclDir,
+                noAnimation    : true,
+                noData         : true,
+                edge: inclDir ? null : { 
+                    topcenter: {icon:'fat fa-home', size: 'lg'}, 
+                    middleleft: {icon:'fat fa-ruler-vertical', size:'xl'}, 
+                    middleright: {icon: 'fat fa-temperature-full', size:'xl'},
+                    bottomright: {text: '12:30', size: 'xxs', onClick: function(){ alert(12.30);}} 
+                }                        
+            });
+            
             widgetList.push(widget);
+            widget.create().appendTo($list);
+            widget.setDirection( 0 );
+
             firstWidget = firstWidget || widget;
         });
 
-//*        
+/*        
         for (var i=0; i<optionsList.length; i=i+3){
             
             var envOptions = $.extend({}, optionsList[i+1], optionsList[i] );
@@ -88,26 +145,54 @@
                     envBackground: envOptions,
                 });                            
             let $div = $('<div/>').addClass('test').appendTo(body);
-
-            widget.createContent($div);
+// HER>             widget.createContent($div);
             widgetList.push(widget);
                              
         }                
 //*/
+/*
         var $size = $('<div/><label for="widgetSize">Size:</label><input type="range" min="100" max="1000" value="200" id="widgetSize"/></div>').prependTo(body),
-            $dir = $('<div/><label for="widgetDir">Dir:</label><input type="range" min="0" max="359" value="0" id="widgetDir"/></div>').prependTo(body),
-            $hide = $('<button style="height: 40px">Hide first widget</button>').prependTo(body),
-            $show = $('<button style="height: 40px">Show first widget</button>').prependTo(body);            
+*/        
+        $('<button style="height: 40px">Hide first widget</button>')
+            .on('click', function(){ firstWidget.setDataAvailableOff(); })
+            .prependTo(body),
 
-        $size.on('input', function(e){ 
-            $('.test').setVar('--size', e.target.value+'px'); 
-        });
+        $('<button style="height: 40px">Show first widget</button>')
+            .on('click', function(){ firstWidget.setDataAvailableOn();  })
+            .prependTo(body);
+        
+        
+
+// HER>         $size.on('input', function(e){ 
+// HER>             $('.test').setVar('--size', e.target.value+'px'); 
+// HER>         });
+
+        var $dir = $('<div/><label for="widgetDir">Dir:</label><input type="range" min="0" max="359" value="0" id="widgetDir"/></div>').prependTo(body);
+
         $dir.on('input', function(e){ 
             widgetList.forEach(widget => { widget.setDirection(e.target.value); } );
         });
-        $hide.on('click', function(){ firstWidget.setDataAvailableOff(); });
-        $show.on('click', function(){ firstWidget.setDataAvailableOn();  });
-
-	</script>
+/*
+        for (var i=0; i<10; i++){
+            let $div = $('<div class="test-modal"></div>').appendTo($list),
+                widget = new window.fcoo.widget.Widget({
+                            header: {da:'Widget #'+i},
+                            content: 'Her er content',
+                            envBackground: envOptions,
+                            
+                            maxWidth: 333,
+                            maxHeight: 444,
+                            containerClass: 'd-inline-block'
+                        });                            
+//            widget.create().appendTo($list);
+        };
+*/
+        new Sortable($list.get(0), {
+            animation: 150,
+            //swapThreshold: 1,
+            ghostClass: 'modal-dragging'
+        });        
+    
+    </script>
 </body>
 </html>
