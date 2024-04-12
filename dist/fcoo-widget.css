@@ -173,7 +173,7 @@ Environmental Background, surface and direction-circle
 }
 
 .wave {
-  --wave-radius: calc(var(--_height, 400) * 10 / 400);
+  --wave-radius: calc(var(--inner-height, 400) * 10 / 400);
   --radius: calc( var(--wave-radius, 10px) * var(--wave-radius-factor, 1) );
   --height: calc(1.5 * var(--radius));
   --diameter: calc(2 * var(--radius));

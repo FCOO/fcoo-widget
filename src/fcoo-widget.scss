@@ -195,7 +195,7 @@ $svg-rotate-z-index : 5;
 
 //Wave: Adjusted from https://codepen.io/shubham715/pen/oqbPGq
 .wave{
-    --wave-radius: calc(var(--_height, 400) * 10 / 400); //=> radius = 10px when height = 400px
+    --wave-radius: calc(var(--inner-height, 400) * 10 / 400); //=> radius = 10px when height = 400px
     --radius  : calc( var(--wave-radius, 10px) * var(--wave-radius-factor, 1) );
     --height  : calc(1.5 * var(--radius));
     --diameter: calc(2 * var(--radius));
