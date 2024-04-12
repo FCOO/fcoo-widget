@@ -308,12 +308,12 @@ half cloud half sky         {
     /********************************************************
     Widget(options)
     options = {
-        header: {icon, text}
-
-        envBackground: false or {partID: partOptions} where partId = 'space', 'cloud', 'sky', 'wave', 'ice', 'snow', 'sea', 'land', or 'seabed'. See src/environmental-background.js for details
-        direction    : false, true or 'from'. If not false adds a direction-circle and arrow
-        noData       : false, true or content to be shown when no data is available. true => xx-large '?'
-        content      : CONTENTPART or []CONTENTPART, CONTENTPART = string, function($container) or {content, size}
+        header          : {icon, text}
+        fixedHeader     : {icon, text}
+        envBackground   : false or {partID: partOptions} where partId = 'space', 'cloud', 'sky', 'wave', 'ice', 'snow', 'sea', 'land', or 'seabed'. See src/environmental-background.js for details
+        direction       : false, true or 'from'. If not false adds a direction-circle and arrow
+        noData          : false, true or content to be shown when no data is available. true => xx-large '?'
+        content         : CONTENTPART or []CONTENTPART, CONTENTPART = string, function($container) or {content, size}
 
         icons: ICON or []ICON, ICON={icon:string, pos:'topleft', 'topcenter', etc, onClick: function}
     }
@@ -324,16 +324,16 @@ half cloud half sky         {
         closeButton   : false,
 //        small         : true,
 //        useTouchSize  : true,
-        noCloseIconOnHeader: true,
+        noCloseIconOnHeader: true
 
 //alwaysMaxHeight: true, Måske hvis der er en fixed height på outer container
+    },
 
-        minimized: {
-            content         : false,
-            showHeader      : true,
-            fixed           : true,
-            footer          : true
-        }
+    defaultMinimizedOptions = {
+        content     : false,
+        showHeader  : true,
+        fixed       : true,
+        footer      : true
     };
 
     /********************************************************
@@ -393,9 +393,23 @@ half cloud half sky         {
 
             options.fixedContent = options.fixedContent || options.fixed;
             delete options.fixed;
+
+            if (options.fixedHeader){
+                options.fixedContent = {
+                    content     : $._bsAdjustIconAndText(options.fixedHeader),
+                    innerHeight : '2em',
+                    withBorder  : true,
+                    centerMiddle: true
+                };
+                //options.fixedClassName = (options.fixedClassName || '') + 'fw-bold';
+            }
+
             if (isMinOrExt){
-                options.fixedContent  = options.hideFixed ? false : options.fixedContent;
-                options.footer = options.hideFooter ? false : options.footer;
+                options.fixedContent  = options.hideFixed ? false : options.fixedContent || this.options.fixedContent;
+                options.fixedContentOptions = options.fixedContentOptions || this.options.fixedContentOptions;
+
+                options.footer = options.hideFooter ? false : options.footer || this.options.footer;
+
                 //showHeader = true by default
                 options.showHeader = options.showHeader || !options.hideHeader;
             }
@@ -486,8 +500,8 @@ half cloud half sky         {
                     },
                     opt.modalOptions || {} );
 
-
-
+            if (modalOpt.minimized)
+                modalOpt.minimized = $.extend(true, {}, defaultMinimizedOptions, modalOpt.minimized);
 
             //Adjust options, width and height for normal content
             this._adjustOptions(opt);

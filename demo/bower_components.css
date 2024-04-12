@@ -33857,6 +33857,7 @@ div.modal-dialog .modal-content {
   word-break: break-word;
   word-wrap: break-word;
   overflow: hidden;
+  --display: block;
   /*
   Special header version for minimized modal windows
   There are tree modes for minimized-content:
@@ -33868,26 +33869,38 @@ div.modal-dialog .modal-content {
 div.modal-dialog .modal-content.no-shadow {
   box-shadow: none;
 }
+div.modal-dialog .modal-content.modal-minimized .show-for-modal-minimized {
+  display: var(--display) !important;
+}
 div.modal-dialog .modal-content.modal-minimized .hide-for-modal-minimized {
   display: none !important;
+}
+div.modal-dialog .modal-content.modal-minimized .hide-for-no-modal-minimized {
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.modal-minimized .show-for-no-modal-minimized {
   display: none !important;
 }
+div.modal-dialog .modal-content.no-modal-minimized .hide-for-modal-minimized {
+  display: var(--display) !important;
+}
 div.modal-dialog .modal-content.no-modal-minimized .show-for-modal-minimized {
   display: none !important;
+}
+div.modal-dialog .modal-content.no-modal-minimized .show-for-no-modal-minimized {
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.no-modal-minimized .hide-for-no-modal-minimized {
   display: none !important;
 }
 div.modal-dialog .modal-content.modal-minimized > .show-for-modal-minimized {
-  display: initial !important;
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.modal-minimized > .hide-for-modal-minimized {
   display: none !important;
 }
 div.modal-dialog .modal-content.no-modal-minimized > .hide-for-modal-minimized {
-  display: initial !important;
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.no-modal-minimized > .show-for-modal-minimized {
   display: none !important;
@@ -33916,26 +33929,38 @@ div.modal-dialog .modal-content.modal-minimized-always-max-height.no-modal-minim
 div.modal-dialog .modal-content.modal-minimized-always-max-height.no-modal-minimized > .show-for-modal-minimized {
   display: none !important;
 }
+div.modal-dialog .modal-content.modal-normal .show-for-modal-normal {
+  display: var(--display) !important;
+}
 div.modal-dialog .modal-content.modal-normal .hide-for-modal-normal {
   display: none !important;
+}
+div.modal-dialog .modal-content.modal-normal .hide-for-no-modal-normal {
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.modal-normal .show-for-no-modal-normal {
   display: none !important;
 }
+div.modal-dialog .modal-content.no-modal-normal .hide-for-modal-normal {
+  display: var(--display) !important;
+}
 div.modal-dialog .modal-content.no-modal-normal .show-for-modal-normal {
   display: none !important;
+}
+div.modal-dialog .modal-content.no-modal-normal .show-for-no-modal-normal {
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.no-modal-normal .hide-for-no-modal-normal {
   display: none !important;
 }
 div.modal-dialog .modal-content.modal-normal > .show-for-modal-normal {
-  display: initial !important;
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.modal-normal > .hide-for-modal-normal {
   display: none !important;
 }
 div.modal-dialog .modal-content.no-modal-normal > .hide-for-modal-normal {
-  display: initial !important;
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.no-modal-normal > .show-for-modal-normal {
   display: none !important;
@@ -33964,26 +33989,38 @@ div.modal-dialog .modal-content.modal-normal-always-max-height.no-modal-normal >
 div.modal-dialog .modal-content.modal-normal-always-max-height.no-modal-normal > .show-for-modal-normal {
   display: none !important;
 }
+div.modal-dialog .modal-content.modal-extended .show-for-modal-extended {
+  display: var(--display) !important;
+}
 div.modal-dialog .modal-content.modal-extended .hide-for-modal-extended {
   display: none !important;
+}
+div.modal-dialog .modal-content.modal-extended .hide-for-no-modal-extended {
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.modal-extended .show-for-no-modal-extended {
   display: none !important;
 }
+div.modal-dialog .modal-content.no-modal-extended .hide-for-modal-extended {
+  display: var(--display) !important;
+}
 div.modal-dialog .modal-content.no-modal-extended .show-for-modal-extended {
   display: none !important;
+}
+div.modal-dialog .modal-content.no-modal-extended .show-for-no-modal-extended {
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.no-modal-extended .hide-for-no-modal-extended {
   display: none !important;
 }
 div.modal-dialog .modal-content.modal-extended > .show-for-modal-extended {
-  display: initial !important;
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.modal-extended > .hide-for-modal-extended {
   display: none !important;
 }
 div.modal-dialog .modal-content.no-modal-extended > .hide-for-modal-extended {
-  display: initial !important;
+  display: var(--display) !important;
 }
 div.modal-dialog .modal-content.no-modal-extended > .show-for-modal-extended {
   display: none !important;
@@ -34021,26 +34058,31 @@ div.modal-dialog .modal-content.no-modal-pinned .show-for-modal-pinned {
 div.modal-dialog .modal-content:not(.modal-fixed-height).modal-minimized:not(.modal-minimized-always-max-height), div.modal-dialog .modal-content:not(.modal-fixed-height).modal-normal:not(.modal-normal-always-max-height), div.modal-dialog .modal-content:not(.modal-fixed-height).modal-extended:not(.modal-extended-always-max-height) {
   height: auto !important;
 }
-div.modal-dialog .modal-content .modal-body {
+div.modal-dialog .modal-content .modal-body, div.modal-dialog .modal-content .modal-body-fixed {
   --inner-height: auto;
   --inner-max-height: none;
   height: var(--inner-height);
   max-height: var(--inner-max-height);
 }
-div.modal-dialog .modal-content .modal-body p {
+div.modal-dialog .modal-content .modal-body p, div.modal-dialog .modal-content .modal-body-fixed p {
   margin: 0;
 }
-div.modal-dialog .modal-content .modal-body ol, div.modal-dialog .modal-content .modal-body ul, div.modal-dialog .modal-content .modal-body dl {
+div.modal-dialog .modal-content .modal-body ol, div.modal-dialog .modal-content .modal-body ul, div.modal-dialog .modal-content .modal-body dl, div.modal-dialog .modal-content .modal-body-fixed ol, div.modal-dialog .modal-content .modal-body-fixed ul, div.modal-dialog .modal-content .modal-body-fixed dl {
   margin: 0;
   padding-left: 2em;
 }
-div.modal-dialog .modal-content .modal-body.modal-body-no-content {
+div.modal-dialog .modal-content .modal-body.modal-body-no-content, div.modal-dialog .modal-content .modal-body-fixed.modal-body-no-content {
   display: none !important;
 }
-div.modal-dialog .modal-content .modal-body.modal-body-always-max-height {
+div.modal-dialog .modal-content .modal-body.modal-body-always-max-height, div.modal-dialog .modal-content .modal-body-fixed.modal-body-always-max-height {
   display: flex;
   flex-direction: column;
   --inner-height: fit-content;
+}
+div.modal-dialog .modal-content .modal-body.center-middle-content, div.modal-dialog .modal-content .modal-body-fixed.center-middle-content {
+  --display: flex;
+  align-items: center;
+  justify-content: center;
 }
 div.modal-dialog .modal-content:not(.modal-extended) .modal-body.hide-for-modal-extended.modal-body-no-content ~ .modal-footer, div.modal-dialog .modal-content.modal-extended .modal-body.show-for-modal-extended.modal-body-no-content ~ .modal-footer {
   border-top: none;
@@ -34069,6 +34111,9 @@ div.modal-dialog .modal-content .modal-body-fixed {
 }
 div.modal-dialog .modal-content .modal-body-fixed:empty {
   display: none !important;
+}
+div.modal-dialog .modal-content .modal-body-fixed.with-border {
+  border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
 }
 div.modal-dialog .modal-content .modal-body {
   flex-shrink: 1;

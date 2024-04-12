@@ -69,18 +69,18 @@
             innerHeight: 200,
             scroll: true,
 //noVerticalPadding: true,
-            header       : {text: 'Test with normal text'},
+            header     : {text: 'Test with normal text'},
+            fixedHeader: {icon: 'fa-map', text:' Fixed Header'},
             minimized: {
                 content: 'Dette er en test', 
                 height: '50px',
                 _innerHeight: '50px',
-                hideFixed: true,
+                _hideFixed: true,
                 hideFooter: true,
-                width: '100px'
+                width: '150px'
             },                        
             content: 'Line 1<br>Line 2<br>Line 3<br>Line 4<br>Line 5<br>Line 6<br>Line 7<br>Line 8<br>Line 9<br>Line 10<br>Line 11<br>Line 12', 
             
-            _fixedContent: 'Fixed',
             //envBackground: window.fcoo.widget.environmentalBackgroundOptions.sky_over_sea,
 
             footer: 'Footer'
@@ -102,11 +102,16 @@ return;
                 innerHeight: 432,
                 //noPadding: true,
                 header       : {text: id},
+                fixedContent: 'FIXED CONTENT',
+                fixedContentOptions: {
+                    innerHeight: 'auto',
+                    noPadding: true
+                },                    
                 minimized: {
                     content: inclDir ? [{content: '_DIRECTION_', size:'lg'}] : id, 
                     widgetContent: true,
                     envBackground: true,
-relativeFontSize: true,
+_relativeFontSize: true,
                     
                     noData: true,
                     noDataFontSize  : 'nl',                        

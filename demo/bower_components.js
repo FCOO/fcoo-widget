@@ -71087,9 +71087,22 @@ jquery-bootstrap-modal-promise.js
             return result ? 'alert-'+result : '';
         }
 
+        function setInnerHeightAndInnerMaxHeight($elem, options){
+            if (options.innerHeight)
+                $elem.css('--inner-height',     typeof options.innerHeight == 'number'    ? options.innerHeight + 'px'    : options.innerHeight    );
+            if (options.innerMaxHeight)
+                $elem.css('--inner-max-height', typeof options.innerMaxHeight == 'number' ? options.innerMaxHeight + 'px' : options.innerMaxHeight );
+        }
+
         //Append fixed content (if any)
+        //If fixedContent.contetn exists => fixedContent is also the options for the fixed content
         //options.fixedContentOptions = options different from content for fixed-content
-        var fixedOptions = $.extend({}, options, options.fixedContentOptions || {}),
+        var fixedOptions = $.extend({},
+                options,
+                {innerHeight:'auto', innerMaxheight: 'none'},
+                options.fixedContent && options.fixedContent.content ? options.fixedContent : {},
+                options.fixedContentOptions || {}
+            ),
             $modalFixedContent = parts.$fixedContent =
                 $('<div/>')
                     .addClass('modal-body-fixed')
@@ -71100,12 +71113,16 @@ jquery-bootstrap-modal-promise.js
                     .toggleClass('pb-0',                        !!fixedOptions.noBottomPadding)
                     .toggleClass('px-0',                        !!fixedOptions.noHorizontalPadding)
                     .toggleClass('modal-body-semi-transparent', !!fixedOptions.semiTransparent)
+                    .toggleClass('center-middle-content',       !!fixedOptions.centerMiddle)
+                    .toggleClass('with-border',                 !!(fixedOptions.withBorder || fixedOptions.bottomBorder || fixedOptions.border))
                     .addClass( getAlertClass(fixedOptions) )
                     .addClass(options.fixedClassName || '')
                     .appendTo( this );
 
-        if (options.fixedContent)
-            $modalFixedContent._bsAppendContent( options.fixedContent, options.fixedContentContext, null, options );
+        if (options.fixedContent){
+            $modalFixedContent._bsAppendContent( options.fixedContent.content ? options.fixedContent.content : options.fixedContent, options.fixedContentContext, null, options );
+            setInnerHeightAndInnerMaxHeight($modalFixedContent, fixedOptions);
+        }
 
         //Append body and content
         var $modalBody = parts.$body =
@@ -71115,16 +71132,12 @@ jquery-bootstrap-modal-promise.js
                     .toggleClass('py-0',                         !!options.noVerticalPadding)
                     .toggleClass('px-0',                         !!options.noHorizontalPadding)
                     .toggleClass('modal-body-semi-transparent',  !!options.semiTransparent)
+                    .toggleClass('center-middle-content',        !!options.centerMiddle)
                     .addClass( getAlertClass(options) )
                     .addClass(options.className || '')
                     .appendTo( this );
 
-        if (options.innerHeight)
-            $modalBody.css('--inner-height',     typeof options.innerHeight == 'number'    ? options.innerHeight + 'px'    : options.innerHeight    );
-        if (options.innerMaxHeight)
-            $modalBody.css('--inner-max-height', typeof options.innerMaxHeight == 'number' ? options.innerMaxHeight + 'px' : options.innerMaxHeight );
-
-
+        setInnerHeightAndInnerMaxHeight($modalBody, options);
 
         if (!options.content || (options.content === {}))
             $modalBody.addClass('modal-body-no-content');
