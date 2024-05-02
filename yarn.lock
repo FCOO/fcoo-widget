@@ -3112,9 +3112,9 @@ editor@~1.0.0:
   integrity sha512-SoRmbGStwNYHgKfjOrX2L0mUvp9bUVv0uPppZSOMAntEbcFtoC3MKF5b3T6HQPXKIV+QGY3xPO3JK5it5lVkuw==
 
 ejs@^3.1.6:
-  version "3.1.9"
-  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.9.tgz#03c9e8777fe12686a9effcef22303ca3d8eeb361"
-  integrity sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==
+  version "3.1.10"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.10.tgz#69ab8358b14e896f80cc39e62087b88500c3ac3b"
+  integrity sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==
   dependencies:
     jake "^10.8.5"
 
@@ -4398,8 +4398,9 @@ grunt-css-url-embed@^1.6.1:
   optionalDependencies:
     mmmagic "~0.5.0"
 
-"grunt-curl@github:fcoo/grunt-curl#^2.6.0":
+grunt-curl@fcoo/grunt-curl#^2.6.0:
   version "2.6.0"
+  uid "30664557ed8c16c026832ebbb374f021d5a8f272"
   resolved "https://codeload.github.com/fcoo/grunt-curl/tar.gz/30664557ed8c16c026832ebbb374f021d5a8f272"
   dependencies:
     async "^3.1.0"
@@ -4543,8 +4544,9 @@ grunt-legacy-util@~2.0.1:
     underscore.string "~3.3.5"
     which "~2.0.2"
 
-"grunt-postcss@github:fcoo/grunt-postcss#^1.0.0":
+grunt-postcss@fcoo/grunt-postcss#^1.0.0:
   version "0.9.0"
+  uid d9e44402f76ea098602188e22409fcc1d1f89e18
   resolved "https://codeload.github.com/fcoo/grunt-postcss/tar.gz/d9e44402f76ea098602188e22409fcc1d1f89e18"
   dependencies:
     chalk "^2.1.0"
