@@ -4398,8 +4398,9 @@ grunt-css-url-embed@^1.6.1:
   optionalDependencies:
     mmmagic "~0.5.0"
 
-"grunt-curl@github:fcoo/grunt-curl#^2.6.0":
+grunt-curl@fcoo/grunt-curl#^2.6.0:
   version "2.6.0"
+  uid "30664557ed8c16c026832ebbb374f021d5a8f272"
   resolved "https://codeload.github.com/fcoo/grunt-curl/tar.gz/30664557ed8c16c026832ebbb374f021d5a8f272"
   dependencies:
     async "^3.1.0"
@@ -4543,8 +4544,9 @@ grunt-legacy-util@~2.0.1:
     underscore.string "~3.3.5"
     which "~2.0.2"
 
-"grunt-postcss@github:fcoo/grunt-postcss#^1.0.0":
+grunt-postcss@fcoo/grunt-postcss#^1.0.0:
   version "0.9.0"
+  uid d9e44402f76ea098602188e22409fcc1d1f89e18
   resolved "https://codeload.github.com/fcoo/grunt-postcss/tar.gz/d9e44402f76ea098602188e22409fcc1d1f89e18"
   dependencies:
     chalk "^2.1.0"
@@ -10111,9 +10113,9 @@ write@1.0.3:
     mkdirp "^0.5.1"
 
 ws@^7, ws@^7.5.5:
-  version "7.5.9"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
-  integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
+  version "7.5.10"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.10.tgz#58b5c20dc281633f6c19113f39b349bd8bd558d9"
+  integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
 
 xdg-basedir@^3.0.0:
   version "3.0.0"
