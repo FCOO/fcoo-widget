@@ -570,6 +570,7 @@ half cloud half sky         {
             if (o.content)
                 this._createInnerContent( $content, o.content, o);
 
+            this.$edge = {};
             if (o.edge){
                 //Add icons or text in one or more of the 8 corners
                 let $cornerContainer = $('<div/>').addClass('content edge-content').appendTo($modalContainer),
@@ -587,7 +588,7 @@ half cloud half sky         {
                         middleSide = middleSide ? 'BOTH' : pos;
                     }
 
-                    let $edgePart = $('<div/>')
+                    let $edgePart = this.$edge[pos] = $('<div/>')
                             .addClass('edge-part d-flex '+pos)
                             .toggleClass('clickable', !!opt.onClick)
                             .appendTo( isMiddle ? $middleContainer : $cornerContainer ),
